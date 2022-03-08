@@ -11,10 +11,18 @@ app.listen(PORT, () => {
     console.log('Server Works !!! At port 4000');
 });
 
-app.get('/download', (req,res) => {
-    var URL = req.query.URL;
-    res.header('Content-Disposition', 'attachment; filename="video.mp3"');
+async function asyncCall(URL, res) {
+    let info = await ytdl.getInfo(URL);
+    console.log(info.videoDetails.title);
+
+    res.header('Content-Disposition', `attachment; filename="${info.videoDetails.title}.mp3"`);
     ytdl(URL, {
         format: 'mp3'
     }).pipe(res);
+};
+
+app.get('/download', (req,res) => {
+    var URL = req.query.URL;
+    videoTitle = asyncCall(URL, res);
+
 });
