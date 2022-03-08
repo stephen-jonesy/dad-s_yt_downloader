@@ -4,6 +4,7 @@ convertBtn.addEventListener('click', () => {
     console.log(`URL: ${URLinput.value}`);
     sendURL(URLinput.value);
 });
+console.log(window.location.href);
 function sendURL(URL) {
-    window.location.href = `http://localhost:4000/download?URL=${URL}`;
+    window.location.href = `${window.location.href}download?URL=${URL}`;
 }
